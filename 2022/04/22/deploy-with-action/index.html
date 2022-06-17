@@ -1,0 +1,200 @@
+<!DOCTYPE html><html lang="zh-Hant"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+<link rel="stylesheet" href="/styles/base.css">
+
+    
+<link rel="stylesheet" href="/styles/theme.css">
+
+    
+<link rel="stylesheet" href="/styles/han-la.css">
+
+    
+<link rel="stylesheet" href="/styles/fancy.css">
+
+    <link rel="shortcut icon" href="/favicon.png">
+    
+    <title>利用 Github Action 自動部屬 - JuenTingShie</title>
+    
+    
+    <!-- google font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&family=Ubuntu+Mono&display=swap');
+    </style>
+    <!-- highlight.js https://highlightjs.org/static/demo/ -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/a11y-dark.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Goto Top -->
+    <script type="text/javascript">
+        $(function() {
+            $('#gotop').click(function(){
+                // console.log('Goto Top');
+                
+                $("html,body,div.container").animate({ scrollTop: 0 }, 'linear');
+                return false;
+            });
+        });
+    </script> 
+    <!-- fancyBox -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <!-- terminal -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/2.33.3/js/jquery.terminal.min.js" data-termynal-container="#termynal"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/2.33.3/css/jquery.terminal.min.css" integrity="sha512-Hxhf2YSvl96qGpC5GffUlXMGOGETKeV9tdOkZwOzq5530XjbSEtzlt9rocWko2wqoi+tEeSrbor1S77qMo4evA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+<!-- hexo injector head_end start --><style>
+body han-la:after {
+    content: ' ';
+    display: inline;
+    font-family: inherit;
+    font-size: 0.45em;
+}
+
+html code han-la,
+html pre han-la,
+html kbd han-la,
+html samp han-la,
+html ruby han-la,
+html .tag-list-item han-la {
+    display: none;
+}
+
+html ol > han-la,
+html ul > han-la {
+    display: none;
+}
+</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
+<body>
+    <div class="header-title" id="gotop">
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span class="header-light"></span>
+        <span>JuenTingShie.github.io<span>
+    </span></span></div>
+    <div class="container">
+        <ul class="nav">
+        
+            <li><a href="/"><han-la></han-la>首頁</a></li>
+        
+            <li><a href="/about/">關於我</a></li>
+        
+            <li><a href="/search/">搜尋<han-la></han-la></a></li>
+        
+            <li><a href="/categories/poem/">poem</a></li>
+        
+        </ul>
+        <div class="content">
+            <div class="post-container">
+    <div class="post-header">
+        <span class="ui-tips">Title:</span>
+        <h1 class="ui-keyword post-title"><han-la></han-la>利用 Github Action 自動部屬<han-la></han-la></h1>
+        <span class="post-date">2022-04-22</span>
+    </div>
+    
+    <div class="post-header">
+        <span class="ui-tips">Category:</span>
+         
+        
+             
+        <a href="/categories/blog/">blog</a>
+        
+    </div>
+    
+    
+    <div class="post-header">
+        <span class="ui-tips">Tag:</span>
+        
+        <a href="/tags/blog/">blog</a>
+        
+    </div>
+    
+    
+
+    
+        <div class="post-content"><h2 id="欸我不是用主機也想改一下小功能"><a href="#欸我不是用主機也想改一下小功能" class="headerlink" title="欸我不是用主機也想改一下小功能"></a><han-la></han-la>欸我不是用主機也想改一下小功能</h2><p>某天在滑手機的時候，突然看到某個好像很讚的<han-la></han-la>hexo-plugin，就想把他加到這個<a href="/">小東西</a>上面，可是怎麼辦，我的<han-la></han-la>hexo<han-la></han-la>資料都在主機裡面…</p>
+<span id="more"></span>
+
+<p>底下突然超級認真:</p>
+<h2 id="阿所以要怎麼辦到呢"><a href="#阿所以要怎麼辦到呢" class="headerlink" title="阿所以要怎麼辦到呢?"></a>阿所以要怎麼辦到呢?</h2><ul>
+<li><a href="#%E9%98%BF%E6%89%80%E4%BB%A5%E8%A6%81%E6%80%8E%E9%BA%BC%E8%BE%A6%E5%88%B0%E5%91%A2">阿所以要怎麼辦到呢?</a><ul>
+<li><a href="#repo-%E8%A8%AD%E5%AE%9A">Repo 設定</a></li>
+<li><a href="#%E8%A8%AD%E5%AE%9A%E5%BF%BD%E7%95%A5%E6%AA%94">設定忽略檔</a></li>
+<li><a href="#%E7%84%B6%E5%BE%8C%E8%A6%81%E9%96%8B%E5%A7%8Bgithub-action%E5%9B%89">然後要開始<han-la></han-la>Github Action<han-la></han-la>囉</a></li>
+</ul>
+</li>
+<li><a href="#%E9%98%BF%E7%84%B6%E5%BE%8C%E5%92%A7">阿然後咧?</a></li>
+</ul>
+<h3 id="Repo-設定"><a href="#Repo-設定" class="headerlink" title="Repo 設定"></a>Repo 設定</h3><ol>
+<li>首先創一個<han-la></han-la>Private<han-la></han-la>的<han-la></han-la>Repo(Github<han-la></han-la>現在不用錢)，底下稱為原始檔<han-la></han-la>repo。</li>
+<li>在主機裡面的原始檔資料夾中，把這個<han-la></han-la>repo<han-la></han-la>加到你的<han-la></han-la>git remote，如果像我是用<han-la></han-la>VScode<han-la></han-la>的話可以這樣加入:</li>
+</ol>
+<p><img src="https://i.imgur.com/t9GKDZ0.png" alt="Imgur"></p>
+<p>如果是喜歡<han-la></han-la>CommandLine<han-la></han-la>就要這樣:</p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git remote add origin git@github.com:&lt;名字&gt;/&lt;repo-name&gt;.git<br></code></pre></td></tr></tbody></table></figure>
+
+<p><han-la></han-la>阿需要登入自己登入。</p>
+<h3 id="設定忽略檔"><a href="#設定忽略檔" class="headerlink" title="設定忽略檔"></a>設定忽略檔</h3><ol>
+<li>加入 .gitignore 檔案<han-la></han-la><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs .gitignore">.DS_Store<br>Thumbs.db<br>db.json<br>*.log<br>node_modules/<br>public/<br>.deploy*/<br>package-lock.json<br>github-deploy-key.pub<br>github-deploy-key<br></code></pre></td></tr></tbody></table></figure></li>
+</ol>
+<h3 id="然後要開始Github-Action囉"><a href="#然後要開始Github-Action囉" class="headerlink" title="然後要開始Github Action囉"></a>然後要開始<han-la></han-la>Github Action<han-la></han-la>囉</h3><p><del>開始進入我的<han-la></han-la>tempo<han-la></han-la>了你知道嗎?</del></p>
+<ol>
+<li>產生金鑰給<han-la></han-la>Github Action<han-la></han-la>用</li>
+</ol>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">不要輸入任何 passphrase!!!</span><br>ssh-keygen -f github-deploy-key<br></code></pre></td></tr></tbody></table></figure>
+
+<blockquote>
+<ol>
+<li>在原始檔 repo，設定 <code>HEXO_DEPLOY_PRI</code> ，貼上 <code>deploy-with-action</code> 的內容。</li>
+</ol>
+</blockquote>
+<p><img src="https://i.imgur.com/8fCepxi.gif" alt="Imgur"></p>
+<blockquote>
+<ol start="2">
+<li>在<han-la></han-la>blog repo，設定 <code>HEXO_DEPLOY_PUB</code> ，貼上 <code>github-deploy-key.pub</code> 的內容。</li>
+</ol>
+</blockquote>
+<p><img src="https://i.imgur.com/XhPPxAy.gif" alt="Imgur"></p>
+<ol start="2">
+<li>加入<han-la></han-la>Github Action<han-la></han-la>的.yml<han-la></han-la>檔<figure class="highlight yml"><figcaption><span>.github/workflows/main.yml</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">name:</span> <span class="hljs-string">HEXO</span> <span class="hljs-string">CI</span><br><br><span class="hljs-attr">on:</span><br>  <span class="hljs-attr">push:</span><br>    <span class="hljs-attr">branches:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">&lt;尼<han-la></han-la>der</span> <span class="hljs-string">source</span> <span class="hljs-string">branch<han-la></han-la>名字&gt;</span><br><br><span class="hljs-attr">jobs:</span><br>  <span class="hljs-attr">build:</span><br>    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">ubuntu-latest</span><br>    <span class="hljs-attr">strategy:</span><br>      <span class="hljs-attr">matrix:</span><br>        <span class="hljs-attr">node-version:</span> [<span class="hljs-string">'16'</span>]<br><br>    <span class="hljs-attr">steps:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v1</span><br><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Use</span> <span class="hljs-string">Node.js</span> <span class="hljs-string">${{</span> <span class="hljs-string">matrix.node-version</span> <span class="hljs-string">}}</span><br>        <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-node@v1</span><br>        <span class="hljs-attr">with:</span><br>          <span class="hljs-attr">node-version:</span> <span class="hljs-string">${{</span> <span class="hljs-string">matrix.node-version</span> <span class="hljs-string">}}</span><br><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Configuration</span> <span class="hljs-string">environment</span><br>        <span class="hljs-attr">env:</span><br>          <span class="hljs-attr">HEXO_DEPLOY_PRI:</span> <span class="hljs-string">${{secrets.HEXO_DEPLOY_PRI}}</span><br>        <span class="hljs-attr">run:</span> <span class="hljs-string">|</span><br><span class="hljs-string">          mkdir -p ~/.ssh/</span><br><span class="hljs-string">          echo "$HEXO_DEPLOY_PRI" | tr -d '\r' &gt; ~/.ssh/id_rsa</span><br><span class="hljs-string">          chmod 600 ~/.ssh/id_rsa</span><br><span class="hljs-string">          ssh-keyscan github.com &gt;&gt; ~/.ssh/known_hosts</span><br><span class="hljs-string">          git config --global init.defaultBranch &lt;尼<han-la></han-la>der blog branch<han-la></han-la>名字&gt;</span><br><span class="hljs-string">          git config --global user.name "&lt;尼<han-la></han-la>der<han-la></han-la>名字&gt;"</span><br><span class="hljs-string">          git config --global user.email "&lt;尼<han-la></han-la>der email&gt;"</span><br><span class="hljs-string"></span>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Install</span> <span class="hljs-string">dependencies</span><br>        <span class="hljs-attr">run:</span> <span class="hljs-string">|</span><br><span class="hljs-string">          npm i -g hexo-cli</span><br><span class="hljs-string">          npm i</span><br><span class="hljs-string"></span>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Deploy</span> <span class="hljs-string">hexo</span><br>        <span class="hljs-attr">run:</span> <span class="hljs-string">|</span><br>          <span class="hljs-string">hexo</span> <span class="hljs-string">clean</span> <span class="hljs-string">&amp;&amp;</span> <span class="hljs-string">hexo</span> <span class="hljs-string">generate</span> <span class="hljs-string">&amp;&amp;</span> <span class="hljs-string">hexo</span> <span class="hljs-string">deploy</span><br></code></pre></td></tr></tbody></table></figure></li>
+</ol>
+<p>阿如果<han-la></han-la>Node.js<han-la></han-la>有新的<han-la></han-la>LTS，就改這邊: node-version: [‘16’]</p>
+<h3 id="改一下-config-yml"><a href="#改一下-config-yml" class="headerlink" title="改一下_config.yml"></a>改一下<han-la></han-la>_config.yml</h3><p><han-la></han-la>好懶喔自己看<han-la></han-la>gif</p>
+<figure class="highlight yml"><figcaption><span>_config.yml</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">deploy:</span><br>  <span class="hljs-attr">type:</span> <span class="hljs-string">git</span><br>  <span class="hljs-attr">repo:</span> <span class="hljs-string">git@github.com:yourname/yourname.github.io.git</span><br>  <span class="hljs-attr">branch:</span> <span class="hljs-string">main</span><br></code></pre></td></tr></tbody></table></figure>
+<p><img src="https://i.imgur.com/Xq0FCjy.gif" alt="Imgur"></p>
+<h2 id="阿然後咧"><a href="#阿然後咧" class="headerlink" title="阿然後咧?"></a>阿然後咧?</h2><p><han-la></han-la>就全部通通給他<han-la></han-la>git add<han-la></han-la>跟<han-la></han-la>git push<han-la></han-la>上去，就可以等你的<han-la></han-la>Github Action<han-la></han-la>自己跑完囉!</p>
+<h2 id="寫在後面"><a href="#寫在後面" class="headerlink" title="寫在後面"></a>寫在後面</h2><p>其實是第一次接觸<han-la></han-la>Github Action，雖然之前有想要摸摸看，但是一直沒有時間。</p>
+<p>科技宅如我喜歡把東西帶著走，想在沙發上用筆電一邊逛<han-la></han-la>Github，一邊摸狗，一邊懶懶的改<han-la></han-la>blog<han-la></han-la>的小功能，阿沒有把原始檔帶著走不就什麼都做不了!</p>
+<p>阿既然要這樣搞，不如再把懶人如我，不想用個隨身碟把原始檔裝著四處<han-la></han-la>hexo depoly，當然就是用<han-la></han-la>Github Action<han-la></han-la>讓他可以自己跑完所有的東西啊!</p>
+<p>這次算是摸到一點<han-la></han-la><a target="_blank" rel="noopener" href="https://resources.github.com/ci-cd/">CI/CD</a><han-la></han-la>的邊邊，但是還遠遠不及更高深的實作，如果公司的<han-la></han-la>E<han-la></han-la>學園有機會上這些東西的話，我一定上爆。</p>
+<h2 id="阿所以…"><a href="#阿所以…" class="headerlink" title="阿所以…"></a>阿所以…</h2><p>我忘記我找到的<han-la></han-la>plugin<han-la></han-la>是什麼了…</p>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/cIpWpEoD60s" frameborder="0" loading="lazy" allowfullscreen=""></iframe></div>
+
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ol>
+<li><a target="_blank" rel="noopener" href="https://op30132.github.io/2020/02/05/github-action/">Hexo + github actions 自動化部署 </a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/actions/setup-node">GitHub Actions</a></li>
+</ol>
+</div>
+     
+</div>
+
+        </div>
+        <div class="footer">
+            
+            <p class="footer-links">
+            
+                <a target="_blank" href="/about/">© JuenTingShie</a>
+            
+            </p>
+            
+            <p class="footer-copyright">
+                <span>Powered by <a target="_blank" href="https://hexo.io">Hexo</a></span>
+                <span>Theme <a target="_blank" href="https://github.com/maiyatang2021/hexo-theme-terminal">Terminal</a></span>
+            </p>
+        </div>
+    </div>
+
+
+</body></html>
